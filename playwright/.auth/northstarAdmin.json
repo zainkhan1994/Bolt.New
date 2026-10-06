@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "sb-127-auth-token",
+          "value": "{\"access_token\":\"eyJhbGciOiJFUzI1NiIsImtpZCI6ImI4MTI2OWYxLTIxZDgtNGYyZS1iNzE5LWMyMjQwYTg0MGQ5MCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjU1NDIxL2F1dGgvdjEiLCJzdWIiOiJhMTAwMDAwMC0wMDAwLTQwMDAtODAwMC0wMDAwMDAwMDAwMDEiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkxMzE2MTYxLCJpYXQiOjE3OTEzMTI1NjEsImVtYWlsIjoiYWRtaW5Abm9ydGhzdGFyLnRlc3QiLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImZ1bGxfbmFtZSI6IkRhbmEgV2hpdGZpZWxkIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTEzMTI1NjF9XSwic2Vzc2lvbl9pZCI6Ijk4MTY0OTc5LTY3MmQtNDdjMi1iZTg1LTIyOTY5NDM2M2ZiYSIsImlzX2Fub255bW91cyI6ZmFsc2V9.r_SE_7yIfUAxxjRRa4jc8seztdJGh6P0JUE_KQ3o2-5yMYxDHrQ89oq2oFu44YHMsU5ZcMR3wAo6NuFp0uHWXw\",\"token_type\":\"bearer\",\"expires_in\":3600,\"expires_at\":1791316161,\"refresh_token\":\"puqcnawsrr6v\",\"user\":{\"id\":\"a1000000-0000-4000-8000-000000000001\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"admin@northstar.test\",\"email_confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"phone\":\"\",\"confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"last_sign_in_at\":\"2026-10-06T18:49:21.790113079Z\",\"app_metadata\":{\"provider\":\"email\",\"providers\":[\"email\"]},\"user_metadata\":{\"full_name\":\"Dana Whitfield\"},\"identities\":[{\"identity_id\":\"c61083fb-0ee7-4643-bc2c-d26abc752113\",\"id\":\"a1000000-0000-4000-8000-000000000001\",\"user_id\":\"a1000000-0000-4000-8000-000000000001\",\"identity_data\":{\"email\":\"admin@northstar.test\",\"email_verified\":true,\"sub\":\"a1000000-0000-4000-8000-000000000001\"},\"provider\":\"email\",\"last_sign_in_at\":\"2026-10-06T18:49:00.236569Z\",\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:00.236569Z\",\"email\":\"admin@northstar.test\"}],\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:21.797199Z\",\"is_anonymous\":false},\"weak_password\":null}"
+        }
+      ]
+    }
+  ]
+}

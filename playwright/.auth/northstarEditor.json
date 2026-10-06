@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "sb-127-auth-token",
+          "value": "{\"access_token\":\"eyJhbGciOiJFUzI1NiIsImtpZCI6ImI4MTI2OWYxLTIxZDgtNGYyZS1iNzE5LWMyMjQwYTg0MGQ5MCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjU1NDIxL2F1dGgvdjEiLCJzdWIiOiJhMTAwMDAwMC0wMDAwLTQwMDAtODAwMC0wMDAwMDAwMDAwMDIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkxMzE2MTY2LCJpYXQiOjE3OTEzMTI1NjYsImVtYWlsIjoiZWRpdG9yQG5vcnRoc3Rhci50ZXN0IiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJmdWxsX25hbWUiOiJMdWlzIE9ydGVnYSJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzkxMzEyNTY2fV0sInNlc3Npb25faWQiOiI2YzVlODEyZS0xY2E0LTRiNmUtOGIzMy1jMjY0YmI3ZmRiMmQiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.KbztINBlQGLu49Hrlp0oK7Dvb5ibirEdWgKH59bSOu_L8UyABHKrqA_hYTP8W2Q2pG-QZQOuuCuA1VJiX68uxQ\",\"token_type\":\"bearer\",\"expires_in\":3600,\"expires_at\":1791316166,\"refresh_token\":\"odlryo3it4iw\",\"user\":{\"id\":\"a1000000-0000-4000-8000-000000000002\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"editor@northstar.test\",\"email_confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"phone\":\"\",\"confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"last_sign_in_at\":\"2026-10-06T18:49:26.082327635Z\",\"app_metadata\":{\"provider\":\"email\",\"providers\":[\"email\"]},\"user_metadata\":{\"full_name\":\"Luis Ortega\"},\"identities\":[{\"identity_id\":\"ffb51c25-c068-42a7-b509-4087a4f9ee5f\",\"id\":\"a1000000-0000-4000-8000-000000000002\",\"user_id\":\"a1000000-0000-4000-8000-000000000002\",\"identity_data\":{\"email\":\"editor@northstar.test\",\"email_verified\":true,\"sub\":\"a1000000-0000-4000-8000-000000000002\"},\"provider\":\"email\",\"last_sign_in_at\":\"2026-10-06T18:49:00.236569Z\",\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:00.236569Z\",\"email\":\"editor@northstar.test\"}],\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:26.086523Z\",\"is_anonymous\":false},\"weak_password\":null}"
+        }
+      ]
+    }
+  ]
+}

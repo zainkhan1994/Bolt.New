@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "sb-127-auth-token",
+          "value": "{\"access_token\":\"eyJhbGciOiJFUzI1NiIsImtpZCI6ImI4MTI2OWYxLTIxZDgtNGYyZS1iNzE5LWMyMjQwYTg0MGQ5MCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjU1NDIxL2F1dGgvdjEiLCJzdWIiOiJhMTAwMDAwMC0wMDAwLTQwMDAtODAwMC0wMDAwMDAwMDAwMDMiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkxMzE2MTY5LCJpYXQiOjE3OTEzMTI1NjksImVtYWlsIjoidmlld2VyQG5vcnRoc3Rhci50ZXN0IiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJmdWxsX25hbWUiOiJQcml5YSBSYW1hbiJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzkxMzEyNTY5fV0sInNlc3Npb25faWQiOiIyZjMzM2QyZC02YzhkLTQ1ZTgtYTJlNy1iM2JlOWVhNGYxZDAiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.KKVaXkEYqLGKqK3IqR3gJCz1zMkVtOAF_iiu7OobU5tMhvyRzsB3P98wXbFayAGTAga3_1FP7z2R4dOEGh9ZKw\",\"token_type\":\"bearer\",\"expires_in\":3600,\"expires_at\":1791316169,\"refresh_token\":\"pjbvwtf5tsgx\",\"user\":{\"id\":\"a1000000-0000-4000-8000-000000000003\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"viewer@northstar.test\",\"email_confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"phone\":\"\",\"confirmed_at\":\"2026-10-06T18:49:00.236569Z\",\"last_sign_in_at\":\"2026-10-06T18:49:29.86445546Z\",\"app_metadata\":{\"provider\":\"email\",\"providers\":[\"email\"]},\"user_metadata\":{\"full_name\":\"Priya Raman\"},\"identities\":[{\"identity_id\":\"fbc24f60-64c8-48cd-a670-1ab84600e4e4\",\"id\":\"a1000000-0000-4000-8000-000000000003\",\"user_id\":\"a1000000-0000-4000-8000-000000000003\",\"identity_data\":{\"email\":\"viewer@northstar.test\",\"email_verified\":true,\"sub\":\"a1000000-0000-4000-8000-000000000003\"},\"provider\":\"email\",\"last_sign_in_at\":\"2026-10-06T18:49:00.236569Z\",\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:00.236569Z\",\"email\":\"viewer@northstar.test\"}],\"created_at\":\"2026-10-06T18:49:00.236569Z\",\"updated_at\":\"2026-10-06T18:49:29.86835Z\",\"is_anonymous\":false},\"weak_password\":null}"
+        }
+      ]
+    }
+  ]
+}

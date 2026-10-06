@@ -1,81 +1,164 @@
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
-import type { Session } from '@supabase/supabase-js';
-import { supabase } from './supabase';
-import type { AppUser, UserRole } from '@/types';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+import type { Membership, Organization, Profile } from '@/types';
+
+interface AuthResult {
+  error: string | null;
+}
 
 interface AuthContextValue {
-  user: AppUser | null;
   session: Session | null;
+  profile: Profile | null;
+  memberships: Membership[];
+  /** True until the initial session (and, if signed in, the profile) has loaded. */
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
+  lastEvent: AuthChangeEvent | null;
+  signIn: (email: string, password: string) => Promise<AuthResult>;
+  signUp: (email: string, password: string, fullName: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<AuthResult>;
+  updatePassword: (password: string) => Promise<AuthResult>;
+  refreshMemberships: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-function extractRole(session: Session | null): UserRole {
-  const role = session?.user?.app_metadata?.role;
-  if (role === 'admin' || role === 'viewer') return role;
-  return 'viewer';
-}
+async function loadAccount(userId: string): Promise<{ profile: Profile | null; memberships: Membership[] }> {
+  const { data: profile } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
 
-function toAppUser(session: Session | null): AppUser | null {
-  if (!session?.user) return null;
-  return {
-    id: session.user.id,
-    email: session.user.email ?? '',
-    role: extractRole(session),
-  };
+  if (profile?.is_super_admin) {
+    // RLS lets super admins read every organization.
+    const { data: orgs } = await supabase.from('organizations').select('*').order('name');
+    return {
+      profile,
+      memberships: (orgs ?? []).map((organization) => ({ organization, role: 'super_admin' as const })),
+    };
+  }
+
+  const { data: rows } = await supabase
+    .from('organization_members')
+    .select('role, organization:organizations(*)')
+    .eq('user_id', userId);
+
+  const memberships = (rows ?? [])
+    .filter((row): row is typeof row & { organization: Organization } => row.organization !== null)
+    .map((row) => ({ organization: row.organization, role: row.role }))
+    .sort((a, b) => a.organization.name.localeCompare(b.organization.name));
+
+  return { profile: profile ?? null, memberships };
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<AppUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [sessionLoaded, setSessionLoaded] = useState(false);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [memberships, setMemberships] = useState<Membership[]>([]);
+  const [accountUserId, setAccountUserId] = useState<string | null>(null);
+  const [lastEvent, setLastEvent] = useState<AuthChangeEvent | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      setUser(toAppUser(data.session));
-      setLoading(false);
+      setSessionLoaded(true);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-      setUser(toAppUser(newSession));
-      setLoading(false);
+    // Keep this callback synchronous: awaiting Supabase calls inside it can deadlock the auth client.
+    const { data: listener } = supabase.auth.onAuthStateChange((event, next) => {
+      setLastEvent(event);
+      setSession(next);
+      setSessionLoaded(true);
     });
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  const signIn = useCallback(async (email: string, password: string) => {
+  const userId = session?.user.id ?? null;
+
+  useEffect(() => {
+    if (!userId) {
+      setProfile(null);
+      setMemberships([]);
+      setAccountUserId(null);
+      return;
+    }
+    let cancelled = false;
+    loadAccount(userId).then((account) => {
+      if (cancelled) return;
+      setProfile(account.profile);
+      setMemberships(account.memberships);
+      setAccountUserId(userId);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  const refreshMemberships = useCallback(async () => {
+    if (!userId) return;
+    const account = await loadAccount(userId);
+    setProfile(account.profile);
+    setMemberships(account.memberships);
+  }, [userId]);
+
+  const signIn = useCallback(async (email: string, password: string): Promise<AuthResult> => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return { error: error.message };
+    // Server-side audit entry; failures here must not block sign-in.
+    await supabase.rpc('record_login').then(() => undefined, () => undefined);
     return { error: null };
   }, []);
 
-  const signUp = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) return { error: error.message };
-    return { error: null };
+  const signUp = useCallback(async (email: string, password: string, fullName: string): Promise<AuthResult> => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    return { error: error?.message ?? null };
   }, []);
 
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, session, loading, signIn, signUp, signOut }}>
-      {children}
-    </AuthContext.Provider>
+  const sendPasswordReset = useCallback(async (email: string): Promise<AuthResult> => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    return { error: error?.message ?? null };
+  }, []);
+
+  const updatePassword = useCallback(async (password: string): Promise<AuthResult> => {
+    const { error } = await supabase.auth.updateUser({ password });
+    return { error: error?.message ?? null };
+  }, []);
+
+  const loading = !sessionLoaded || (userId !== null && accountUserId !== userId);
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      session,
+      profile,
+      memberships,
+      loading,
+      lastEvent,
+      signIn,
+      signUp,
+      signOut,
+      sendPasswordReset,
+      updatePassword,
+      refreshMemberships,
+    }),
+    [session, profile, memberships, loading, lastEvent, signIn, signUp, signOut, sendPasswordReset, updatePassword, refreshMemberships],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextValue {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
